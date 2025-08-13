@@ -4,7 +4,7 @@
 <meta http-equiv="content-type" content="text/html;charset=utf-8" />
 
 <head>
-    <link rel="njLogo" href="njLogo.jpg">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
     <meta name="viewport" content="user-scalable=0">
     <meta name="theme-color" content="#ffffff">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -52,9 +52,13 @@
     </div>
     <div class="bip" onclick="increaseRides()">INTRASTATE</div>
     <div class="rectangle">
-        <div class="rectangle-text1" onclick="updateZoneText()">2</div>
+        <div class="rectangle-text1">1</div>
         <div class="rectangle-text2">ZONE RIDE</div>
         <div class="rectangle-text3">**Not Valid For HBLR**</div>
+        <div class="overlay">
+            <div class="top-zone" onclick="decreaseZone()"></div>
+            <div class="bottom-zone" onclick="increaseZone()"></div>
+        </div>
     </div>
     <div class="rectangle-outside">View Valid Instructions</div>
     <div class="bottom-container">
@@ -147,10 +151,21 @@
             datetime.innerHTML = `${dateString}`;
         }
 
-        function updateZoneText() {
+        function increaseZone() {
             const zoneElement = document.querySelector('.rectangle-text1');
             let currentZone = parseInt(zoneElement.textContent, 10);
-            currentZone = currentZone === 8 ? 2 : currentZone + 1;
+            if (currentZone < 9) {
+                currentZone = currentZone + 1;
+            }
+            zoneElement.textContent = currentZone;
+        }
+
+        function decreaseZone() {
+            const zoneElement = document.querySelector('.rectangle-text1');
+            let currentZone = parseInt(zoneElement.textContent, 10);
+            if (currentZone > 1) {
+                currentZone = currentZone - 1;
+            }
             zoneElement.textContent = currentZone;
         }
         // updateMonthAndYear();
@@ -166,5 +181,3 @@
 <!-- Mirrored from dummytummy123.github.io/ticketsystem/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 09 Jan 2025 16:05:01 GMT -->
 
 </html>
-
-
