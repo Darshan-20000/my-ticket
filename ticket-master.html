@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+
+<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+
+<head>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <meta name="viewport" content="user-scalable=0">
+    <meta name="theme-color" content="#ffffff">
+    <meta content='yes' name='apple-mobile-web-app-capable' />
+    <meta content='yes' name='mobile-web-app-capable' />
+    <link rel="stylesheet" href="style.css">
+    <script>
+        const linkElement = document.createElement('link');
+        linkElement.rel = 'stylesheet';
+        linkElement.type = 'text/css';
+        const timestamp = new Date().getTime();
+        const updatedCssUrl = `color.css?t=${timestamp}`;
+        linkElement.href = updatedCssUrl;
+        document.head.appendChild(linkElement);
+    </script>
+    <script>
+        function openPopup() {
+            document.getElementById('popupModal').style.display = 'block';
+        }
+
+        function closePopup() {
+            document.getElementById('popupModal').style.display = 'none';
+        }
+    </script>
+</head>
+
+<body style="margin: 0;">
+    <div class="container">
+        <div class="square" onclick="changeColor()">
+            <div id="pass_month_year">
+                <div class=" square-text">
+                    One Way
+                </div>
+                <div class="ride-text">
+                    <div class="rideCounts">1</div>
+                    <div style="margin-left: 15px;">Adult</div>
+                </div>
+            </div>
+        </div>
+        <div class="qr-square">
+            <a href="#" onclick="openPopup(); return false;">
+                <img class="qr-code" src="your-qr-code-image.png" alt="QR Code">
+            </a>
+            <div class="tap-to-enlarge">Tap to enlarge</div>
+        </div>
+    </div>
+    <div class="bip" onclick="increaseRides()">INTRASTATE</div>
+    <div class="rectangle">
+        <div class="rectangle-text1">1</div>
+        <div class="rectangle-text2">ZONE RIDE</div>
+        <div class="rectangle-text3">**Not Valid For HBLR**</div>
+        <div class="overlay">
+            <div class="top-zone" onclick="decreaseZone()"></div>
+            <div class="bottom-zone" onclick="increaseZone()"></div>
+        </div>
+    </div>
+    <div class="rectangle-outside">View Valid Instructions</div>
+    <div class="bottom-container">
+        <div class="datetime">
+            <div id="time" class="time"></div>
+            <div id="date"></div>
+        </div>
+        <div class="color-strip">
+            <div class="color-block red"></div>
+            <div class="color-block green"></div>
+            <div class="color-block blue"></div>
+        </div>
+        <div class="expires-text">Expires in <span id="countdown"></span></div>
+        <img class="bottom-image" src="bottom.png" alt="Bottom Image">
+
+        <div id="popupModal"
+            style="position: fixed;top: 19%;left: 52%;transform: translate(-50%, -50%);width: 100%;background-color: rgb(255, 255, 255);border: 2px solid rgb(204, 204, 204);box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 10px;padding: 20px 20px 20px 487px;height: 142%;display: none;">
+            <img onclick="closePopup()" src="your-qr-code-image.png" alt="QR Code"
+                style="width: 50%;object-fit: contain;padding-top: 130%;margin-bottom: 65px;">
+            <a class="back-font">Tap to go back</a>
+        </div>
+    </div>
+    <script>
+
+        function increaseRides() {
+            const zoneElement = document.querySelector('.rideCounts');
+            let currentRide = parseInt(zoneElement.textContent, 5);
+            currentRide = currentRide === 4 ? 1 : currentRide + 1;
+            zoneElement.textContent = currentRide;
+        }
+
+        const colors = [
+            '#C083C3',
+            '#44A25A',
+            '#F2CED5',
+            '#F5DF25',
+            '#fe6366',
+            '#0C84E9',
+            '#989898' ];
+        let index = 0;
+
+        function changeColor() {
+            index = (index + 1) % colors.length; // loop through colors
+            document.documentElement.style.setProperty('--first', colors[ index ]);
+        }
+
+
+        function updateCountdown() {
+            const countdown = document.getElementById('countdown');
+            const currentDate = new Date();
+
+            if (!window.deadlineDate) {
+                window.deadlineDate = new Date(currentDate.getTime() + 30 * 60 * 1000);
+            }
+            const diffMs = window.deadlineDate - currentDate;
+
+            if (diffMs <= 0) {
+                window.deadlineDate = new Date(currentDate.getTime() + 30 * 60 * 1000);
+                countdown.textContent = "30:00";
+                return;
+            }
+            const timeRemaining = new Date(diffMs);
+            const minutes = timeRemaining.getUTCMinutes();
+            const seconds = timeRemaining.getUTCSeconds();
+            countdown.textContent =
+                `00:` + `00:` + `${minutes.toString().padStart(2, '0')}:` +
+                `${seconds.toString().padStart(2, '0')}`;
+        }
+
+
+
+        function updateTime() {
+            const datetime = document.getElementById('time');
+            const currentDate = new Date();
+
+            const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
+
+            const timeString = currentDate.toLocaleTimeString('en-US', timeOptions);
+
+            datetime.innerHTML = `${timeString}`;
+        }
+        function updateDate() {
+            const datetime = document.getElementById('date');
+            const currentDate = new Date();
+
+            const dateOptions = { weekday: 'long', month: 'short', day: '2-digit', year: 'numeric' };
+
+            const dateString = currentDate.toLocaleDateString('en-US', dateOptions);
+
+            datetime.innerHTML = `${dateString}`;
+        }
+
+        function increaseZone() {
+            const zoneElement = document.querySelector('.rectangle-text1');
+            let currentZone = parseInt(zoneElement.textContent, 10);
+            if (currentZone < 9) {
+                currentZone = currentZone + 1;
+            }
+            zoneElement.textContent = currentZone;
+        }
+
+        function decreaseZone() {
+            const zoneElement = document.querySelector('.rectangle-text1');
+            let currentZone = parseInt(zoneElement.textContent, 10);
+            if (currentZone > 1) {
+                currentZone = currentZone - 1;
+            }
+            zoneElement.textContent = currentZone;
+        }
+        // updateMonthAndYear();
+        updateDate();
+        updateTime();
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+        setInterval(updateTime, 1000);
+    </script>
+
+</body>
+
+</html>

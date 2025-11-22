@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Monthly Pass</title>
+
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <meta name="theme-color" content="#ffffff">
+    <meta content='yes' name='apple-mobile-web-app-capable' />
+    <meta content='yes' name='mobile-web-app-capable' />
+    <link rel="stylesheet" href="style.css">
+    <script>
+        const linkElement = document.createElement('link');
+        linkElement.rel = 'stylesheet';
+        linkElement.type = 'text/css';
+        const timestamp = new Date().getTime();
+        const updatedCssUrl = `color.css?t=${timestamp}`;
+        linkElement.href = updatedCssUrl;
+        document.head.appendChild(linkElement);
+    </script>
+    <script>
+        function openPopup() {
+            document.getElementById('popupModal').style.display = 'block';
+        }
+
+        function closePopup() {
+            document.getElementById('popupModal').style.display = 'none';
+        }
+    </script>
+</head>
+
+<body>
+
+    <script>
+        const colors = [
+            '#c488c4',
+            '#44A25A',
+            '#F2CED5',
+            '#F5DF25',
+            '#fe6366',
+            '#0C84E9',
+            '#8F8F8F' ];
+        let index = 0;
+
+        function changeColor() {
+            index = (index + 1) % colors.length; // loop through colors
+            if (index == 0) {
+                document.documentElement.style.setProperty('--first', '#c488c4');
+            } else {
+                document.documentElement.style.setProperty('--first', colors[ index ]);
+            }
+        }
+
+        function increaseZone() {
+            const zoneElement = document.querySelector('.big');
+            let currentZone = parseInt(zoneElement.textContent, 10);
+            if (currentZone < 9) {
+                currentZone = currentZone + 1;
+            }
+            zoneElement.textContent = currentZone;
+        }
+
+        function decreaseZone() {
+            const zoneElement = document.querySelector('.big');
+            let currentZone = parseInt(zoneElement.textContent, 10);
+            if (currentZone > 1) {
+                currentZone = currentZone - 1;
+            }
+            zoneElement.textContent = currentZone;
+        }
+        // changeColor()
+    </script>
+    <div class="container">
+        <div class="subContainer">
+            <div class="header">
+                <img src="left-icon.png" alt="Back" />
+                <h2>Monthly Pass</h2>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="top-section">
+                <div class="qr-box">
+                    <!-- <div class="qr-inner"></div> -->
+                    <div class="qr-inner">
+                        <a href="#" onclick="openPopup(); return false;">
+                            <img class="qr-code" src="qr.png" alt="QR Code">
+                        </a>
+                    </div>
+                </div>
+
+                <div class="tap-to-enlarge-new">Tap to enlarge</div>
+
+                <div class="divider"></div>
+
+                <div class="interstate">INTERSTATE</div>
+
+                <div class="date-zone">
+                    <div class="date-box" onclick="changeColor()">Nov<br>2025</div>
+                    <div>
+                        <div class="overlay-new">
+                            <div class="top-zone" onclick="decreaseZone()"></div>
+                            <div class="bottom-zone" onclick="increaseZone()"></div>
+                        </div>
+                        <div class="zone-info">
+                            <p class="big">2</p>
+                            <p class="small">ZONE RIDE</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div>
+                <div class="color-strip">
+                    <div class="color-block red"></div>
+                    <div class="color-block green"></div>
+                    <div class="color-block blue"></div>
+                </div>
+                <div class="bottom-section">
+                    <div class="progress-bar">
+                        <div class="progress-fill"></div>
+                    </div>
+                </div>
+
+                <div class="exp">Expires in 11 days.</div>
+                <div class="link">View Onboard Validator Instructions</div>
+            </div>
+        </div>
+    </div>
+    </div>
+</body>
+
+</html>

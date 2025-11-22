@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Click to Change Color</title>
+    <style>
+        :root {
+            --color-1: #c488c4;
+            /* initial color */
+        }
+
+        .rectangle {
+            height: 100px;
+            width: 300px;
+            display: grid;
+            place-items: center;
+            margin: 30px auto;
+            background: linear-gradient(0deg,
+                    var(--color-1) 0%,
+                    white 40%,
+                    white 60%,
+                    var(--color-1) 100%);
+            border-radius: 1.25vh;
+            text-align: center;
+            font-weight: 500;
+            cursor: pointer;
+            user-select: none;
+            font-family: sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="rectangle" onclick="changeColor()">Click me to change color</div>
+
+    <script>
+        const colors = [ '#c488c4', '#05b29c', '#bcee7b', '#5eebfe' ];
+        let index = 0;
+
+        function changeColor() {
+            index = (index + 1) % colors.length; // loop through colors
+            document.documentElement.style.setProperty('--color-1', colors[ index ]);
+        }
+    </script>
+
+</body>
+
+</html>
