@@ -34,10 +34,20 @@ def save_root_block(root_block):
 
 
 def git_commit_push():
-    subprocess.run(["git", "add", OUTPUT_FILE])
-    subprocess.run(["git", "commit", "-m", "Updated :root colors from external CSS"])
-    subprocess.run(["git", "push"])
-    print("Pushed to GitHub successfully!")
+    subprocess.run(["git", "add", "."], check=True)
+     # Commit only if there is something to commit
+    commit_status = subprocess.run(["git", "diff", "--cached", "--quiet"])
+    if commit_status.returncode != 0:
+        subprocess.run(["git", "commit", "-m", "Auto update"], check=True)
+    else:
+        print("No changes to commit.")
+
+    # Try push
+    result = subprocess.run(["git", "push"])
+    if result.returncode == 0:
+        print("Pushed to GitHub successfully!")
+    else:
+        print("❌ Push failed. Fix the GitHub email verification issue.")
 
 
 if __name__ == "__main__":

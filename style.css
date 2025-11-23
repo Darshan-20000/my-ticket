@@ -45,7 +45,7 @@ body {
     object-fit: cover; /* Ensures the image covers the area without stretching */
 }
 
-.container {
+.container{
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
@@ -220,6 +220,11 @@ body {
 
 .color-block {
     width: 34%;
+    height: 50px;
+}
+
+.color-block-new {
+    width: 34%;
     height: 20px;
 }
 
@@ -270,10 +275,10 @@ a.back-font {
         }
 
         /* TOP BLUE HEADER AREA */
-        .container {
+        .container-new {
             width: 100vw;
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
         }
 
         .subContainer {
